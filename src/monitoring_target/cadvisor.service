@@ -1,0 +1,17 @@
+[Unit]
+Description=cAdvisor Container Metrics
+Documentation=https://github.com/google/cadvisor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+#User=cadvisor
+#Group=cadvisor
+Type=simple
+ExecStart=/usr/local/bin/cadvisor
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
