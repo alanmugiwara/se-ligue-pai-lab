@@ -1,6 +1,6 @@
 services:
   postgres: # db zabbix
-    image: postgres:16-alpine3.18
+    image: ${ZABBIX_DB_IMAGE}:${ZABBIX_DB_VERSION}
     container_name: db-zabbix-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
   
   zabbix-server: # back zabbix
-    image: zabbix/zabbix-server-pgsql:alpine-6.0-latest
+    image: ${ZABBIX_SERVER_IMAGE}:${ZABBIX_SERVER_VERSION}
     container_name: back-zabbix-server
     depends_on:
       - postgres
@@ -31,12 +31,13 @@ services:
     restart: unless-stopped
 
   zabbix-web: # front zabbix
-    image: zabbix/zabbix-web-nginx-pgsql:alpine-6.0-latest
+    image: ${ZABBIX_WEB_IMAGE}:${ZABBIX_WEB_VERSION}
     container_name: front-zabbix-web
     depends_on:
       - postgres
       - zabbix-server
     environment:
+      environment:
       DB_SERVER_HOST: ${DB_SERVER_HOST}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -47,11 +48,11 @@ services:
       - "${HOST_PHP_PORT}:${CONTAINER_PHP_PORT}"
     networks:
       - zabbix-net
-    mem_limit: 150m
+    mem_limit: 512m
     restart: unless-stopped
   
   prometheus:
-    image: prom/prometheus:v3.13.1-distroless
+    image: ${PROMETHEUS_IMAGE}:${PROMETHEUS_VERSION}
     container_name: prometheus
     volumes: # bind
      - ./src/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -62,11 +63,33 @@ services:
       - '9090:9090'
     networks:
       - zabbix-net
-    mem_limit: 100m
+    mem_limit: 256m
+    restart: unless-stopped
+
+  grafana:
+    image: ${GRAFANA_IMAGE}:${GRAFANA_VERSION}
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "${HOST_GRAFANA_PORT}:${CONTAINER_GRAFANA_PORT}"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_INSTALL_PLUGINS: ${GRAFANA_PLUGINS}
+      GF_SERVER_DOMAIN: monitoramento.alancruztec.com.br
+      GF_SERVER_ROOT_URL: https://monitoramento.alancruztec.com.br/
+      GF_SERVER_PROTOCOL: http
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - zabbix-net
+    mem_limit: 1250m
     restart: unless-stopped
     
 volumes:
   postgres_data:
+  grafana_data:
 
 networks:
   zabbix-net:

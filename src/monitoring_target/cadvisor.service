@@ -1,8 +1,10 @@
 [Unit]
 Description=cAdvisor Container Metrics
 Documentation=https://github.com/google/cadvisor
-After=network-online.target
+After=network-online.target docker.service
 Wants=network-online.target
+Requires=docker.service 
+# wait for docker
 
 [Service]
 #User=cadvisor

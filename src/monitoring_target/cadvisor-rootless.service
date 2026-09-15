@@ -1,0 +1,23 @@
+[Unit]
+Description=cAdvisor Container Metrics
+Documentation=https://github.com/google/cadvisor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=alan
+Group=alan
+Type=simple
+Environment="XDG_RUNTIME_DIR=/run/user/1002"
+
+### for docker engine ###
+# ExecStart=/usr/local/bin/cadvisor
+
+### for podman rootless ###
+ExecStart=/usr/local/bin/cadvisor --podman=unix:///run/user/1002/podman/podman.sock
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
