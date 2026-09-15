@@ -1,4 +1,7 @@
-Este projeto documenta um laboratório de observabilidade ligados a estudos da área de **DevOps** (Desenvolvimento e Operações) e **SRE** (Site Reliability Engineering, ou Engenharia de Confiabilidade de Sites), utilizando uma placa **Raspberry Pi Zero2W** como servidor homelab.
+# 🎯 Se ligue, pai - LAB
+![Alteração das credenciais padrão no primeiro acesso ao Zabbix](src/img/00-logo.png)
+
+Este projeto documenta um laboratório de observabilidade ligado a estudos na área de **DevOps** (Desenvolvimento e Operações) e **SRE** (Site Reliability Engineering, ou Engenharia de Confiabilidade de Sites), utilizando uma placa **Raspberry Pi Zero2W** como servidor homelab.
 
 A infraestrutura é composta por uma placa **Raspberry Pi Zero2W** conectada a um **adaptador micro-USB OTG** que por sua vez conecta-se a uma **DockStation** com fonte de alimentação, contendo um **HD SATA 2.5 Slim de 1TB**, responsável por armazenar as mídias utilizadas pelas aplicações self-hosted executadas pelo SO instalado na placa.
 
