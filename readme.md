@@ -1,9 +1,24 @@
+[![made Language](https://img.shields.io/badge/Made%20with-Shell_Script-8A2BE2)](https://github.com/alanmugiwara)
+[![made Language](https://img.shields.io/badge/Made%20with-YML_File-8A2BE2)](https://github.com/alanmugiwara)
+![create date](https://img.shields.io/badge/Created-set%2016,%202026-8A2BE2)
+[![Last update](https://img.shields.io/github/last-commit/alanmugiwara/se-ligue-pai-lab?color=8A2BE2&label=Last%20Commit)](https://github.com/alanmugiwara/jiboia-rasp-quiz)
+
+[![contributors](https://img.shields.io/github/contributors/alanmugiwara/se-ligue-pai-lab?color=8A2BE2)](https://github.com/alanmugiwara)
+[![issues counter](https://img.shields.io/github/issues/alanmugiwara/se-ligue-pai-lab?color=8A2BE2)](https://github.com/alanmugiwara)
+[![repo size](https://img.shields.io/github/repo-size/alanmugiwara/se-ligue-pai-lab?color=8A2BE2)](https://github.com/alanmugiwara)
+
 # 🎯 Se ligue, pai - LAB
 ![Alteração das credenciais padrão no primeiro acesso ao Zabbix](src/img/00-logo.png)
 
-Este projeto documenta um laboratório de observabilidade ligado a estudos na área de **DevOps** (Desenvolvimento e Operações) e **SRE** (Site Reliability Engineering, ou Engenharia de Confiabilidade de Sites), utilizando uma placa **Raspberry Pi Zero2W** como servidor homelab.
+Este projeto documenta um laboratório de observabilidade voltado a estudos de **DevOps** (Desenvolvimento e Operações) e **SRE** (Site Reliability Engineering, ou Engenharia de Confiabilidade de Sites), utilizando uma placa **Raspberry Pi Zero 2W** como servidor homelab.
 
-A infraestrutura é composta por uma placa **Raspberry Pi Zero2W** conectada a um **adaptador micro-USB OTG** que por sua vez conecta-se a uma **DockStation** com fonte de alimentação, contendo um **HD SATA 2.5 Slim de 1TB**, responsável por armazenar as mídias utilizadas pelas aplicações self-hosted executadas pelo SO instalado na placa.
+O nome “Se Ligue, Pai – Lab” é um trocadilho com a expressão popular de Salvador “se ligue, pai”, utilizada de forma descontraída para chamar a atenção para algo.
+
+**No contexto do projeto, a expressão ganha um sentido relacionado à observabilidade em DevOps/SRE: acompanhar a infraestrutura, ficar de olho nas métricas, identificar anomalias e entender o comportamento dos serviços antes que problemas se tornem incidentes.**
+
+**O termo “Pai” também faz referência à Raspberry Pi, hardware utilizado como base do homelab. Assim, o nome une a cultura soteropolitana, a Raspberry Pi e o conceito de observabilidade trazendo uma identidade descontraída para o laboratório.**
+
+A infraestrutura é composta por uma placa **Raspberry Pi Zero 2W** conectada a um **adaptador micro-USB OTG** que por sua vez conecta-se a uma **DockStation** com fonte de alimentação, contendo um **HD SATA 2.5 Slim de 1TB**, responsável por armazenar as mídias utilizadas pelas aplicações executadas.
 
 A solução integra as ferramentas: **Zabbix** para monitoramento tradicional, **Prometheus** para coleta e armazenamento de métricas em séries temporais, o **Node Exporter** para exportação de métricas do SO (Sistema Operacional), **cAdvisor** para as métricas de containers Docker / Podman e **Grafana** para visualização de tudo isso em dashboards, além de definir alertas.
 
@@ -257,7 +272,7 @@ sudo systemctl disable zabbix-agent2
 sudo apt purge 'zabbix-agent2*' -y
 sudo apt autoremove -y
 ```
-### Verificar e anotar o host-name da **Máquina (Servidor) Linux ** (será importante mais adiante)
+### Verificar e anotar o host-name da Máquina (Servidor) Linux (será importante mais adiante)
 
 **Rode para descobrir o hostname**
 ``` bash
@@ -348,9 +363,9 @@ podman-compose up -d && podman ps
 ```
 ## **PARTE  04 - VALIDAÇÕES**
 
-#### Teste de conexão entre endpoints **ZABBIX**
+#### Teste de conexão entre os endpoints **ZABBIX**
 
-**No servidor Linux (Zabbix Agent2) faça um teste de conexão com o PC (Monitoramento)****
+**No servidor Linux (Zabbix Agent2) faça um teste de conexão com o PC (Monitoramento)**
 ``` bash
 sudo apt install netcat-openbsd && nc -zv <IP_DA_MAQUINA_CLIENTE> 10051
 ```
@@ -366,10 +381,10 @@ grep -E '^(Server|ServerActive|Hostname|LogFile)' /etc/zabbix/zabbix_agent2.conf
 sudo apt install netcat-openbsd && nc -zv <IP_DA_MAQUINA_SERVIDOR_LINUX_AGENT2> 10050
 ```
 #### Teste de conexão com os jobs **PROMETHEUS**
-**Na Máquina (Cliente)** acesse o localhost  **http://localhost:9090/targets** para ver a lista de endpoints alvo ativos e que devem previamente definidos através do `YML` de configuração do Prometheus do nosso projeto, localizado no caminho `se-ligue-pai-lab/src/prometheus/prometheus.yml`
+**Na Máquina (Cliente)** acesse o localhost  ``http://localhost:9090/targets`` para ver a lista de endpoints alvo ativos e que devem previamente definidos através do `YML` de configuração do Prometheus do nosso projeto, localizado no caminho `se-ligue-pai-lab/src/prometheus/prometheus.yml`
 ## **PARTE  05 - Instalação dos monitores de logs avançados Node Exporter (para o OS) e cAdvisor (Containers) na Máquina (Servidor) Linux**
 
-#### ** INSTALAR o Node Exporter PARA DOCKER** 
+#### **INSTALAR o Node Exporter PARA DOCKER** 
 **No servidor linux, execute os comandos abaixo para baixar, extrair, dar permissões de execução e criar um usuário para rodar o Node Exporter**
 ``` bash
 sudo wget --show-progress -O /usr/local/bin/node_exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.12.1/node_exporter-1.12.1.linux-arm64.tar.gz
@@ -378,9 +393,10 @@ sudo mv /usr/local/bin/node_exporter-*/node_exporter /usr/local/bin/node_exporte
 sudo chmod +x /usr/local/bin/node_exporter
 sudo rm -rf /usr/local/bin/node_exporter-* /usr/local/bin/node_exporter.tar.gz
 sudo useradd --no-create-home --shell /usr/sbin/nologin node_exporter && id node_exporter
-``
+```
 
-#### ** INSTALAR o Node Exporter para PODMAN** (sem criação de usuário)
+#### **INSTALAR o Node Exporter para PODMAN (sem criação de usuário)**
+
 **No servidor linux, execute os comandos abaixo para baixar, extrair, dar permissões de execução e criar um usuário para rodar o Node Exporter**
 ``` bash
 sudo wget --show-progress -O /usr/local/bin/node_exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.12.1/node_exporter-1.12.1.linux-arm64.tar.gz
@@ -389,7 +405,8 @@ sudo mv /usr/local/bin/node_exporter-*/node_exporter /usr/local/bin/node_exporte
 sudo chmod +x /usr/local/bin/node_exporter
 sudo rm -rf /usr/local/bin/node_exporter-* /usr/local/bin/node_exporter.tar.gz
 ```
-#### ** INSTALAR O cAdvisor para DOCKER** 
+#### **INSTALAR O cAdvisor para DOCKER**
+
 **No servidor linux, execute os comandos abaixo para baixar, extrair, dar permissões de execução e criar um usuário para rodar o cAdvisor**
 
 ``` bash
@@ -452,9 +469,9 @@ sudo systemctl restart cadvisor && sudo systemctl status cadvisor
 ```
 ## **PARTE  06 - Cadastro da Máquina (Servidor) Linux (Agent2) na Máquina (Cliente) (Containers Zabbix, Prometheus, Grafana) para alimentar o Dashboard do Zabbix Web**
 
-**Na Máquina (Cliente), acesse o localhost: http://127.0.0.1:8080/**
-**Utilize  os dados de login padrão de Administrador do Zabbix 
-user: Admin | password = zabbix**
+**Na Máquina (Cliente), acesse o local: ``http://127.0.0.1:8080/``**
+Utilize  os dados de login padrão de Administrador do Zabbix
+<br>**user** = Admin | **password** = zabbix
 
 **É altamente recomendado alterar os dados de acesso após o 1º login!**
 **Siga os passos da imagem e preencha os campos conforme o descrito.**
@@ -486,3 +503,11 @@ user: Admin | password = zabbix**
 ![Dashboards no grafana](src/img/06-grafana-datasource.gif)
 
 ### **A próxima atualização do projeto deverá contemplar a configuração de alertas e notificações para monitoramento de eventos críticos através do Grafana, como uso de disco superior a 85%, utilização de memória RAM acima de 90% e indisponibilidade de servidores, e outros indicadores de desempenho e disponibilidade.**
+
+## Contato
+Para dúvidas, sugestões ou melhorias, entre em contato com Álan Cruz:
+
+<a href="https://instagram.com/alancruz_tec" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"></a>
+<a href="mailto:contato@alancruztec.com.br"><img loading="lazy" src="https://img.shields.io/badge/E--Mail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="E-mail"></a>
+<a href="https://linkedin.com/in/alansilvadacruz" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Linkedin"></a>
+<a href="https://alancruztec.com.br" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-My%20Website-%230077B5?style=for-the-badge&logo=wordpress&logoColor=white" alt="Website"></a>
