@@ -1,7 +1,7 @@
 [![made Language](https://img.shields.io/badge/Made%20with-Shell_Script-8A2BE2)](https://github.com/alanmugiwara)
 [![made Language](https://img.shields.io/badge/Made%20with-YML_File-8A2BE2)](https://github.com/alanmugiwara)
 ![create date](https://img.shields.io/badge/Created-set%2016,%202026-8A2BE2)
-[![Last update](https://img.shields.io/github/last-commit/alanmugiwara/se-ligue-pai-lab?color=8A2BE2&label=Last%20Commit)](https://github.com/alanmugiwara/jiboia-rasp-quiz)
+[![Last update](https://img.shields.io/github/last-commit/alanmugiwara/se-ligue-pai-lab?color=8A2BE2&label=Last%20Commit)](https://github.com/alanmugiwara/se-ligue-pai-lab)
 
 [![contributors](https://img.shields.io/github/contributors/alanmugiwara/se-ligue-pai-lab?color=8A2BE2)](https://github.com/alanmugiwara)
 [![issues counter](https://img.shields.io/github/issues/alanmugiwara/se-ligue-pai-lab?color=8A2BE2)](https://github.com/alanmugiwara)
